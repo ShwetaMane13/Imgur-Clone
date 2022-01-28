@@ -44,12 +44,12 @@
         //     }
         // });
 
-        let res = await fetch(`https://api.unsplash.com/photos?query=random&per_page=100&client_id=Wi9ocF2wz5fY5eHb5EmlIOMH5X1aq5l4GAV6-RvkhFY`);
+        let res = await fetch(`https://api.unsplash.com/photos?query=random&per_page=1000&client_id=Wi9ocF2wz5fY5eHb5EmlIOMH5X1aq5l4GAV6-RvkhFY`);
 
 
         let data = await res.json();
         // console.log(data);
-        // console.log('data:', data.data)
+        console.log('data:', data)
         
         showData(data);
     }
@@ -65,8 +65,9 @@
             let parent = document.createElement("div");
 
             let img = document.createElement("img");
-            img.src = el.urls.small;
+            img.loading = "lazy";
 
+            img.src = el.urls.small;
             parent.append(img);
             container.append(parent)
             
