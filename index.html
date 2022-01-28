@@ -5,16 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .container {
+            display: grid;
+            grid-template-columns: repeat(4, 20%);
+            grid-gap: 2%;
+        }
+    </style>
 </head>
 <body>
     <h1>Hello from imgur</h1>
+    <div id="container"></div>
 </body>
 </html>
 
 
 <script>
+    let container = document.getElementById("container");
     async function getData() {
-        let res = await fetch(`https://api.imgur.com/3/gallery/hot/viral/year/1?showViral=true&mature=true&album_previews=true`,
+        let res = await fetch(`https://api.imgur.com/3/gallery/search/viral/day?q=cats&q_type=jpg`,
         {
             method: "GET",
             headers: {
@@ -22,11 +31,44 @@
                 "Authorization": "Client-ID 946e304a383aa29"
             }
         });
+        // let res = await fetch(`https://api.imgur.com/3/gallery/hot/viral/day/1?showViral=true&mature=true&album_previews=true`,
+        // {
+        //     method: "GET",
+        //     headers: {
+        //         "content-type": "application/json",
+        //         "Authorization": "Client-ID 946e304a383aa29"
+        //     }
+        // });
 
         let data = await res.json();
-        console.log("data", data);
+        console.log('data:', data.data)
         
+        showData(data.data);
+    }
+    getData();
+
+    async function showData(data) {
+        data.forEach((el)=>{
+            let div = document.createElement("div");
+            let title = document.createElement("h2");
+            title.innerText = el.title;
+            let image = document.createElement("img");
+            let im = el.images;
+            for (let i=0; i< im.length; i++) {
+                if(im[i].type == "image/jpeg" || im[i].type == "image/png" || im[i].type == "image/jpg"){
+                    console.log("i.link:", im[i].link);
+                   // image.src = `https://i.imgur.com/bHRdJBG.jpg`;
+                    break;
+                }
+            }
+            image.src =`https://i.imgur.com/qMPkqEV.jpg`;
+            //console.log('el.images:', el.images)
+            image.style.width = "100px";
+            image.style.height = "100px"
+            //console.log('im[0]:', im[0].gifv)
+            div.append(image, title);
+            container.append(div);
+        })
     }
 
-    getData();
 </script>
