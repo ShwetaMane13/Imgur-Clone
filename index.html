@@ -6,10 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        .container {
+        #container {
             display: grid;
             grid-template-columns: repeat(4, 20%);
-            grid-gap: 2%;
+            grid-gap: 5%;
+            margin-left: 5%;
+        }
+
+        img{
+            width: 80%;
         }
     </style>
 </head>
@@ -21,16 +26,15 @@
 
 
 <script>
-    let container = document.getElementById("container");
     async function getData() {
-        let res = await fetch(`https://api.imgur.com/3/gallery/search/viral/day?q=cats&q_type=jpg`,
-        {
-            method: "GET",
-            headers: {
-                "content-type": "application/json",
-                "Authorization": "Client-ID 946e304a383aa29"
-            }
-        });
+        // let res = await fetch(`https://api.imgur.com/3/gallery/search/viral/day?q=cats&q_type=jpg`,
+        // {
+        //     method: "GET",
+        //     headers: {
+        //         "content-type": "application/json",
+        //         "Authorization": "Client-ID 946e304a383aa29"
+        //     }
+        // });
         // let res = await fetch(`https://api.imgur.com/3/gallery/hot/viral/day/1?showViral=true&mature=true&album_previews=true`,
         // {
         //     method: "GET",
@@ -40,34 +44,51 @@
         //     }
         // });
 
+        let res = await fetch(`https://api.unsplash.com/photos?query=random&per_page=100&client_id=Wi9ocF2wz5fY5eHb5EmlIOMH5X1aq5l4GAV6-RvkhFY`);
+
+
         let data = await res.json();
-        console.log('data:', data.data)
+        // console.log(data);
+        // console.log('data:', data.data)
         
-        showData(data.data);
+        showData(data);
     }
     getData();
 
+
     async function showData(data) {
+
+    let container = document.getElementById("container");
+
         data.forEach((el)=>{
-            let div = document.createElement("div");
-            let title = document.createElement("h2");
-            title.innerText = el.title;
-            let image = document.createElement("img");
-            let im = el.images;
-            for (let i=0; i< im.length; i++) {
-                if(im[i].type == "image/jpeg" || im[i].type == "image/png" || im[i].type == "image/jpg"){
-                    console.log("i.link:", im[i].link);
-                   // image.src = `https://i.imgur.com/bHRdJBG.jpg`;
-                    break;
-                }
-            }
-            image.src =`https://i.imgur.com/qMPkqEV.jpg`;
-            //console.log('el.images:', el.images)
-            image.style.width = "100px";
-            image.style.height = "100px"
-            //console.log('im[0]:', im[0].gifv)
-            div.append(image, title);
-            container.append(div);
+
+            let parent = document.createElement("div");
+
+            let img = document.createElement("img");
+            img.src = el.urls.small;
+
+            parent.append(img);
+            container.append(parent)
+            
+            // let div = document.createElement("div");
+            // let title = document.createElement("h2");
+            // title.innerText = el.title;
+            // let image = document.createElement("img");
+            // let im = el.images;
+            // for (let i=0; i< im.length; i++) {
+            //     if(im[i].type == "image/jpeg" || im[i].type == "image/png" || im[i].type == "image/jpg"){
+            //         console.log("i.link:", im[i].link);
+            //        image.src = `https://i.imgur.com/bHRdJBG.jpg`;
+            //         break;
+            //     }
+            // }
+            // // image.src = "https://i.imgur.com/qMPkqEV.jpg";
+            // // console.log('el.images:', el.images)
+            // image.style.width = "100px";
+            // image.style.height = "100px"
+            // //console.log('im[0]:', im[0].gifv)
+            // div.append(image, title);
+            // container.append(div);
         })
     }
 
