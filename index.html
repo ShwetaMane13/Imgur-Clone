@@ -7,6 +7,26 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <h1>Hello from imgur</h1>
 </body>
 </html>
+
+
+<script>
+    async function getData() {
+        let res = await fetch(`https://api.imgur.com/3/gallery/hot/viral/year/1?showViral=true&mature=true&album_previews=true`,
+        {
+            method: "GET",
+            headers: {
+                "content-type": "application/json",
+                "Authorization": "Client-ID 946e304a383aa29"
+            }
+        });
+
+        let data = await res.json();
+        console.log("data", data);
+        
+    }
+
+    getData();
+</script>
