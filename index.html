@@ -23,7 +23,7 @@
 </head>
 <body>
     <h1>Hello from imgur</h1>
-    <input type="text" placeholder="Search">
+    <input type="text" placeholder="Search" id="search">
     <button onclick="search()" >Search</button>
     <div id="container"></div>
     
@@ -35,8 +35,18 @@
 
 
 <script>
-    async function getData() {
-        // let res = await fetch(`https://api.imgur.com/3/gallery/search/viral/day?q=cats&q_type=jpg`,
+    async function search() {
+        let val = document.getElementById("search").value;
+        let res = await fetch(`https://api.unsplash.com/search/photos?client_id=Wi9ocF2wz5fY5eHb5EmlIOMH5X1aq5l4GAV6-RvkhFY&query=${val}}`);
+        let d = await res.json();
+        console.log('d:', d);
+        //set data to localStorage and redirect to other page
+    }
+
+
+
+    async function getData(num) {
+        // let r = await fetch(`https://api.imgur.com/3/gallery/search/viral/day?q=cats&q_type=jpg`,
         // {
         //     method: "GET",
         //     headers: {
@@ -44,6 +54,9 @@
         //         "Authorization": "Client-ID 946e304a383aa29"
         //     }
         // });
+        // let dwe = await r.json();
+        // console.log('dwe:', dwe)
+
         // let res = await fetch(`https://api.imgur.com/3/gallery/hot/viral/day/1?showViral=true&mature=true&album_previews=true`,
         // {
         //     method: "GET",
@@ -54,17 +67,23 @@
         // });
 
 
-        let res = await fetch(`https://api.unsplash.com/photos?query=random&per_page=30&client_id=Wi9ocF2wz5fY5eHb5EmlIOMH5X1aq5l4GAV6-RvkhFY`);
+        let res = await fetch(`https://api.unsplash.com/photos?query=random&page=${num}&per_page=30&client_id=Wi9ocF2wz5fY5eHb5EmlIOMH5X1aq5l4GAV6-RvkhFY`);
 
 
 
         let data = await res.json();
         // console.log(data);
-        console.log('data:', data)
+        console.log('data:', data, num)
         
         showData(data);
     }
-    getData();
+    getData(1);
+    getData(2);
+    getData(3);
+    getData(4);
+    getData(5);
+    getData(6);
+    getData(7);
 
 
     async function showData(data) {
