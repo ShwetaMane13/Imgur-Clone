@@ -5,7 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
+
+    <link rel="stylesheet" href="./masonry-layout-vanilla.min.css" />
+    
+    <!-- <style>
         #container {
             display: grid;
             grid-template-columns: repeat(4, 20%);
@@ -16,12 +19,16 @@
         img{
             width: 80%;
         }
-    </style>
+    </style> -->
 </head>
 <body>
     <h1>Hello from imgur</h1>
     <div id="container"></div>
+    
+<script src="./masonry-layout-vanilla.min.js"></script>
 </body>
+
+
 </html>
 
 
@@ -63,16 +70,19 @@
     let container = document.getElementById("container");
 
         data.forEach((el)=>{
+        
+            // let parent = document.createElement("div");
+            // parent.setAttribute("id", "parent")
 
-            let parent = document.createElement("div");
-
+            
             let img = document.createElement("img");
+            img.setAttribute("class", "image")
             img.loading = "lazy";
 
             img.src = el.urls.small;
-            parent.append(img);
-            container.append(parent)
-            
+            // parent.append(img);
+            // container.append(parent)
+
             // let div = document.createElement("div");
             // let title = document.createElement("h2");
             // title.innerText = el.title;
@@ -92,6 +102,18 @@
             // //console.log('im[0]:', im[0].gifv)
             // div.append(image, title);
             // container.append(div);
+
+            let wrapperMasonry = document.createElement("div");
+            wrapperMasonry.setAttribute("class", "wrapper-masonry");
+
+            let masonryImage = document.createElement("div");
+            masonryImage.setAttribute("id", "masonry-2");
+
+            masonryImage.append(img);
+            wrapperMasonry.append(masonryImage);
+            container.append(wrapperMasonry);
+
+            fecthMasonry('masonry-2', 'image', 4);
         })
     }
 
