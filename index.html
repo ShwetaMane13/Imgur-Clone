@@ -100,7 +100,12 @@
             font-size: 17px;
             line-height: 2.24;
             letter-spacing: .9px;
+            cursor: pointer;
             font-family: "Helvetica";
+        }
+
+        #searchTitle:hover{
+            color: white;
         }
     </style>
 
@@ -143,14 +148,19 @@
             let title = document.createElement("p");
             title.setAttribute("id", "searchTitle");
             title.innerText = res.alt_description;
+            title.onclick = () => {
+                sessionStorage.setItem("searchTitle", JSON.stringify(res));
+                window.location.href = "./new.html"
+            }
             displayResult.append(title);
+
 
         })
     }
 
     async function main(){
-
         let val = document.getElementById("search").value;
+
 
         if(val.length < 3)
         {
@@ -215,9 +225,14 @@
 
             let masonryImage = document.createElement("div");
             masonryImage.setAttribute("id", "masonry-2");
-
+                    
             masonryImage.append(img);
             wrapperMasonry.append(masonryImage);
+            img.style.cursor = "pointer";
+            img.onclick = ()=>{
+                sessionStorage.setItem("searchTitle", JSON.stringify(el))
+                window.location.href = "./new.html"
+            }
             container.append(wrapperMasonry);
 
             fecthMasonry('masonry-2', 'image', 4);
