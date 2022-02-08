@@ -119,27 +119,29 @@
             left: 25%;
         }
 
-        #fdiv{
+        .fdiv{
             margin-right: 50px;
-            background-color: #171544
+            background-color: #171544;
+            cursor: pointer;
         }    
 
-        #fdiv p{
+        .fdiv p{
             background-color:#171544;
             color: white;
             font-weight: bold;
+            cursor: pointer;
         }
 
-        #fdiv img{
+        .fdiv img{
             width: 80px;
             height: 70px;
+            cursor: pointer;
         }
-
-      
 
 
         h3{
             position: relative;
+            display: block;
             top: 20%;
             left: 37%;
             background-color: transparent;
@@ -161,31 +163,31 @@
         <img id="logo" src="https://upload.wikimedia.org/wikipedia/commons/b/bb/Imgur_Title_Screen_Image.svg" alt="">
         <input oninput="debounce(main, 500)" spellcheck="false" type="text" placeholder="Images, #tags, @users oh my!" id="search">
         <div id="flexbox">
-            <div id="fdiv" class="big">
+            <div class="fdiv" >
                 <img src="./oddy.jpg" />
                 <p>Oddly Satisfying</p>
             </div>
-            <div id="fdiv">
+            <div class="fdiv">
                 <img src="./coffee.jpg" />
                 <p>Coffee</p>
             </div>
-            <div id="fdiv">
+            <div class="fdiv">
                 <img src="./staff.jpg" />
                 <p>Staff Picks</p>
             </div>
-            <div id="fdiv">
+            <div class="fdiv">
                 <img src="./image1.jpg" />
                 <p>Memes</p>
             </div>
-            <div id="fdiv">
+            <div class="fdiv">
                 <img src="./clean.jpg" />
                 <p>Clean your desk</p>
             </div>
-            <div id="fdiv">
+            <div class="fdiv">
                 <img src="./funny.png" />
                 <p>Funny</p>
             </div>
-            <div id="fdiv">
+            <div class="fdiv">
                 <img src="./dog.png" />
                 <p>Dog</p>
             </div>
@@ -194,7 +196,7 @@
         </div>
         <!-- <img src="./image1.jpg" /> -->
         <button id="searchBtn" ><img src="https://s.imgur.com/desktop-assets/desktop-assets/icon-search.8d0f9b564a4659d48d8eca38b968a7f2.svg" alt=""></button>
-        <h3>Apply directly to the forehead.</h3>
+        <h3 id="apply">Apply directly to the forehead.</h3>
         <img src="https://i.imgur.com/xeEIpAn_d.jpg?maxwidth=800&shape=thumb&fidelity=high&client_id=946e304a383aa29" alt="">
     </div>
     
@@ -230,7 +232,7 @@
             title.innerText = res.alt_description;
             title.onclick = () => {
                 sessionStorage.setItem("searchTitle", JSON.stringify(res));
-                window.location.href = "./new.html"
+                // window.location.href = "./new.html"
             }
             displayResult.append(title);
 
@@ -245,6 +247,7 @@
         if(val.length < 3)
         {
             displayResult.style.display = "none";
+            document.getElementById("apply").style.display ="block"
             return false;
         }
 
@@ -263,6 +266,7 @@
 
         timerId = setTimeout(() => {
             displayResult.style.display = "block";
+            document.getElementById("apply").style.display = "none";
             func();
         }, delay);
     }
@@ -274,17 +278,17 @@
        
         showData(data);
     }
-    
-    getData(1);
-    // getData(2);
-    // getData(3);
-    // getData(4);
-    // getData(5);
-    // getData(6);
-    // getData(7);
-    // getData(8);
-    // getData(9);
-    // getData(10);
+    var i = 1;
+    getData(i);
+  
+    window.addEventListener("scroll", ()=>{
+    if(window.scrollY + window.innerHeight >= document.documentElement.scrollHeight){
+        i++;
+        console.log('i:', i)
+
+       getData(i);
+    }
+})
     
 
     async function showData(data) {
@@ -311,7 +315,7 @@
             img.style.cursor = "pointer";
             img.onclick = ()=>{
                 sessionStorage.setItem("searchTitle", JSON.stringify(el))
-                window.location.href = "./new.html"
+                // window.location.href = "./new.html"
             }
             container.append(wrapperMasonry);
 
